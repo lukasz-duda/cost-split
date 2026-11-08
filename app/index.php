@@ -23,8 +23,12 @@ header('Referrer-Policy: no-referrer');
 // Stan rozliczeń jest wyliczany przy każdym żądaniu – przeglądarka nie może pokazywać starej wersji strony.
 header('Cache-Control: no-store');
 
-// Routing przez parametr ?r=/sciezka – działa na każdym hostingu, bez mod_rewrite.
-$path = '/' . trim((string) ($_GET['r'] ?? ''), '/');
+// Routing po adresie URL (mod_rewrite, patrz .htaccess). Starsze linki index.php?r=/sciezka nadal działają.
+$path = Routing::path(
+    $_SERVER['REQUEST_URI'] ?? '/',
+    $_SERVER['SCRIPT_NAME'] ?? '/index.php',
+    isset($_GET['r']) ? (string) $_GET['r'] : null,
+);
 
 try {
     (new App($config))->handle($_SERVER['REQUEST_METHOD'] ?? 'GET', $path);

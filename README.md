@@ -1,7 +1,8 @@
 # Cost Split
 
 Aplikacja do rozliczania wspólnych zakupów w grupie (specyfikacja: [spec.md](spec.md)).
-PHP 8.5, MySQL 5.7, JavaScript – bez frameworków, bez Composera i bez `mod_rewrite`.
+PHP 8.5, MySQL 5.7, JavaScript – bez frameworków i bez Composera. Czytelne adresy (`/admin`, `/p/TOKEN`) wymagają
+`mod_rewrite` (Apache).
 
 ## Wdrożenie na hostingu (FTP + SQL)
 
@@ -9,11 +10,14 @@ PHP 8.5, MySQL 5.7, JavaScript – bez frameworków, bez Composera i bez `mod_re
 2. Skopiuj `app/config.example.php` jako `app/config.php` i uzupełnij dane bazy oraz `admin_token`
    (długi, losowy ciąg znaków).
 3. Wgraj **zawartość** katalogu `app/` przez FTP, np. do `public_html/` lub `public_html/koszty/`.
+   Wgraj też plik `.htaccess` (klienty FTP często ukrywają pliki z kropką – w razie potrzeby wgraj go jako
+   `_htaccess` i zmień nazwę na serwerze).
 4. Otwórz w przeglądarce adres aplikacji i zaloguj się tokenem administratora.
 
 Aktualizacja istniejącej bazy: zaimportuj kolejno pliki `db/migrate-*.sql`, których jeszcze nie wykonano.
 
-Aplikacja nie wymaga `.htaccess` – wszystkie strony obsługuje `index.php?r=...`.
+`.htaccess` kieruje do `index.php` każde żądanie, które nie dotyczy istniejącego pliku (np. `assets/app.js`),
+a aplikacja wybiera stronę po adresie URL. Starsze linki w postaci `index.php?r=/p/TOKEN` nadal działają.
 Pliki w `src/` i `templates/` nic nie wyświetlają po bezpośrednim wywołaniu.
 
 ## Uruchomienie lokalne (Docker Compose)

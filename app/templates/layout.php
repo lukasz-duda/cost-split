@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= h($title) ?> – Cost Split</title>
-    <link rel="stylesheet" href="assets/style.css">
-    <script src="assets/validation.js" defer></script>
-    <script src="assets/app.js" defer></script>
+    <link rel="stylesheet" href="<?= h(url('/assets/style.css')) ?>">
+    <script src="<?= h(url('/assets/validation.js')) ?>" defer></script>
+    <script src="<?= h(url('/assets/app.js')) ?>" defer></script>
 </head>
 <body>
 <header>

@@ -32,10 +32,10 @@ function field_error(array $errors, string $field): string
     return '<small class="error" data-error-for="' . h($field) . '">' . h($errors[$field] ?? '') . '</small>';
 }
 
-/** Względny adres strony aplikacji, np. url('/admin') -> "index.php?r=/admin". */
+/** Adres strony aplikacji (od katalogu głównego serwera), np. url('/admin') -> "/koszty/admin". */
 function url(string $path): string
 {
-    return $path === '/' ? 'index.php' : 'index.php?r=' . $path;
+    return Routing::url(Routing::basePath($_SERVER['SCRIPT_NAME'] ?? '/index.php'), $path);
 }
 
 function csrf_field(): string

@@ -124,5 +124,23 @@ check('sender cannot edit confirmed', App::canEditRepayment(['confirmed' => true
 check('recipient edits confirmed', App::canEditRepayment(['confirmed' => true] + $pending, 2), true);
 check('confirmed cannot be confirmed again', App::canConfirmRepayment(['confirmed' => true] + $pending, 2), false);
 
+// Routing po adresie URL (mod_rewrite)
+check('routing root', Routing::path('/', '/index.php'), '/');
+check('routing index.php', Routing::path('/index.php', '/index.php'), '/');
+check('routing admin', Routing::path('/admin', '/index.php'), '/admin');
+check('routing query ignored', Routing::path('/admin/groups/3?x=1', '/index.php'), '/admin/groups/3');
+check('routing trailing slash', Routing::path('/admin/', '/index.php'), '/admin');
+check('routing subdir', Routing::path('/koszty/p/abc', '/koszty/index.php'), '/p/abc');
+check('routing subdir root', Routing::path('/koszty/', '/koszty/index.php'), '/');
+check('routing subdir no slash', Routing::path('/koszty', '/koszty/index.php'), '/');
+check('routing subdir index.php', Routing::path('/koszty/index.php', '/koszty/index.php'), '/');
+check('routing similar prefix', Routing::path('/koszty2/admin', '/koszty/index.php'), '/koszty2/admin');
+check('routing legacy r', Routing::path('/index.php?r=/p/abc', '/index.php', '/p/abc'), '/p/abc');
+check('routing legacy r subdir', Routing::path('/koszty/index.php?r=/admin', '/koszty/index.php', '/admin'), '/admin');
+check('base path root', Routing::basePath('/index.php'), '');
+check('base path subdir', Routing::basePath('/koszty/index.php'), '/koszty');
+check('url root', Routing::url('', '/admin'), '/admin');
+check('url subdir', Routing::url('/koszty', '/admin/groups/1'), '/koszty/admin/groups/1');
+
 echo "{$count} checks, {$failures} failures\n";
 exit($failures > 0 ? 1 : 0);

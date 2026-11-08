@@ -671,7 +671,7 @@ final class App
 
     private function redirect(string $path): void
     {
-        header('Location: ' . $this->baseUrl() . '/' . url($path), true, 303);
+        header('Location: ' . $this->baseUrl() . $path, true, 303);
     }
 
     /** Adres katalogu aplikacji bez końcowego ukośnika, np. https://example.pl/koszty */
@@ -681,7 +681,7 @@ final class App
             return rtrim($this->config['app_url'], '/');
         }
         $https = ($_SERVER['HTTPS'] ?? '') !== '' && $_SERVER['HTTPS'] !== 'off';
-        $dir = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/');
+        $dir = Routing::basePath($_SERVER['SCRIPT_NAME'] ?? '/index.php');
         return ($https ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $dir;
     }
 

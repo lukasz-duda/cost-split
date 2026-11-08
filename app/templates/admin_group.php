@@ -28,7 +28,7 @@ $value = static fn (string $key, int $id, string $dbValue) => $fromOld ? (string
         <tbody>
         <?php foreach ($persons as $p):
             $prefix = "persons[{$p['id']}]";
-            $link = "{$baseUrl}/" . url("/p/{$p['access_token']}");
+            $link = "{$baseUrl}/p/{$p['access_token']}";
             ?>
             <tr data-share-row data-person-id="<?= $p['id'] ?>" data-saved-share="<?= h((string) $p['share_bp']) ?>">
                 <td data-label="Imię">

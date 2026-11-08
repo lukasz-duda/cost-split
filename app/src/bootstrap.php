@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+require __DIR__ . '/Routing.php';
 require __DIR__ . '/Format.php';
 require __DIR__ . '/Validation.php';
 require __DIR__ . '/Shares.php';
